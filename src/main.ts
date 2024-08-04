@@ -1,5 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
+
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import Stats from 'three/addons/libs/stats.module.js'
 import { GUI } from 'dat.gui'
@@ -19,7 +20,8 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight)
 })
 
-new OrbitControls(camera, renderer.domElement)
+/***************************** ORBIT CONTROLS *****************************/
+new OrbitControls(camera, renderer.domElement);
 
 const geometry = new THREE.BoxGeometry()
 const material = new THREE.MeshNormalMaterial({ wireframe: true })
@@ -27,30 +29,33 @@ const material = new THREE.MeshNormalMaterial({ wireframe: true })
 const cube = new THREE.Mesh(geometry, material)
 scene.add(cube)
 
-const stats = new Stats()
-document.body.appendChild(stats.dom)
 
-const gui = new GUI()
+/***************************** DAT GUI *****************************/
+const gui = new GUI();
 
-const cubeFolder = gui.addFolder('Cube')
-cubeFolder.add(cube.rotation, 'x', 0, Math.PI * 2)
-cubeFolder.add(cube.rotation, 'y', 0, Math.PI * 2)
-cubeFolder.add(cube.rotation, 'z', 0, Math.PI * 2)
-cubeFolder.open()
+const cubeGuiFolder = gui.addFolder('Cube');
+cubeGuiFolder.add(cube.rotation, 'x', 0, Math.PI*2);
+cubeGuiFolder.add(cube.rotation, 'y', 0, Math.PI*2);
+cubeGuiFolder.add(cube.rotation, 'z', 0, Math.PI*2);
+cubeGuiFolder.open();
 
-const cameraFolder = gui.addFolder('Camera')
-cameraFolder.add(camera.position, 'z', 0, 20)
-cameraFolder.open()
+const cameraGuiFolder = gui.addFolder('Camera');
+cameraGuiFolder.add(camera.position, 'z', 0, 10);
+cameraGuiFolder.open();
+
+/***************************** STATS *****************************/
+const stats = new Stats();
+document.body.appendChild(stats.dom);
 
 function animate() {
   requestAnimationFrame(animate)
-
-  //cube.rotation.x += 0.01
-  //cube.rotation.y += 0.01
-
+  
+  // cube.rotation.x += 0.01
+  // cube.rotation.y += 0.01
+  
   renderer.render(scene, camera)
 
-  stats.update()
+  stats.update();
 }
 
 animate()
